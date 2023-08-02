@@ -3,6 +3,7 @@ import styles from "./City.module.css";
 import { useCities } from "../contexts/CitiesContext";
 import { useEffect } from "react";
 import Spinner from "./Spinner";
+import ButtonBack from "./BackButton";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -11,24 +12,25 @@ const formatDate = (date) =>
     year: "numeric",
   }).format(new Date(date));
 
-  const flagemojiToPNG = (flag) => {
-    var countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
-      .map((char) => String.fromCharCode(char - 127397).toLowerCase())
-      .join("");
-    return (
-      <img src={`https://flagcdn.com/24x18/${countryCode}.png`} alt="flag" />
-    );
-  };
+const flagemojiToPNG = (flag) => {
+  var countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
+    .map((char) => String.fromCharCode(char - 127397).toLowerCase())
+    .join("");
+  return (
+    <img src={`https://flagcdn.com/24x18/${countryCode}.png`} alt="flag" />
+  );
+};
 
 function City() {
   const { id } = useParams();
-  const {getCity, currentCity, isLoading} = useCities()
+  const { getCity, currentCity, isLoading } = useCities();
 
-
-
-  useEffect(function() {
-    getCity(id);
-  }, [id])
+  useEffect(
+    function () {
+      getCity(id);
+    },
+    [id]
+  );
   // const [searchParams, setSearchParams] = useSearchParams();
   // const lat = searchParams.get("lat");
   // const lng = searchParams.get("lng");
@@ -42,7 +44,7 @@ function City() {
 
   const { cityName, emoji, date, notes } = currentCity;
 
-  if(isLoading) return <Spinner />
+  if (isLoading) return <Spinner />;
 
   return (
     <div className={styles.city}>
@@ -77,7 +79,7 @@ function City() {
       </div>
 
       <div>
-        {/* <ButtonBack /> */}
+        <ButtonBack />
       </div>
     </div>
   );
